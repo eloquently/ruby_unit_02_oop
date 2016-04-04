@@ -1,9 +1,4 @@
-# Lecture covers:
-# TDD Basics
-# Goal in Ruby: Don't repeat yourself
-
-
-# first things first:
+# First things first:
 # Let's install Bundler.
 # Bundler allows us to keep track of all the external libraries (gems) we need
 # Bundler makes it easy to update gems, install a bunch of new ones, and
