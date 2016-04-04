@@ -1,81 +1,69 @@
-require_relative '../lib/day_01'
+require '01_basics'
 
 describe 'Farm' do
-    before :each do
-        @farm = Farm.new
-    end
+    let(:farm) { Farm.new }
 
     it 'has $1000 to start' do
-        expect(@farm.cash).to eq(1000)
+        expect(farm.cash).to eq(1000)
     end
 
     context 'items' do
         it 'is array' do
-            expect(@farm.items).to be_a(Array)
+            expect(farm.items).to be_a(Array)
         end
         it 'empty to start' do
-            expect(@farm.items.count).to eq(0)
+            expect(farm.items.count).to eq(0)
         end
     end
 end
 
 describe 'Rock' do
     context 'gray rock' do
-        before :each do
-            @rock = Rock.new('gray')
-        end
+        let(:rock)  { Rock.new('gray') }
 
         it 'is gray' do
-            expect(@rock.color).to eq('gray')
+            expect(rock.color).to eq('gray')
         end
     end
 
     context 'brown rock' do
-        before :each do
-            @rock = Rock.new('brown')
-        end
+        let(:rock)  { Rock.new('brown') }
 
         it 'is brown' do
-            expect(@rock.color).to eq('brown')
+            expect(rock.color).to eq('brown')
         end
     end
 
     context 'default rock' do
-        before :each do
-            @rock = Rock.new
-        end
+        let(:rock)  { Rock.new }
 
         it 'is black' do
-            expect(@rock.color).to eq('black')
+            expect(rock.color).to eq('black')
         end
     end
 end
 
 describe 'Cow' do
-    before :each do
-        @cow = Cow.new
-    end
+    let(:cow) { Cow.new }
 
     it 'costs $100' do
-        expect(@cow.price).to eq(100)
+        expect(cow.price).to eq(100)
     end
 
     it 'says "moo"' do
-        expect(@cow.speak).to eq('moo')
+        expect(cow.speak).to eq('moo')
     end
 end
 
 describe 'Pig' do
-    before :each do
-        @pig = Pig.new
-    end
+    let(:pig) { Pig.new }
 
     it 'costs $50' do
-        expect(@pig.price).to eq(50)
+        expect(pig.price).to eq(50)
     end
 
     it 'says "oink"' do
-        expect(@pig.speak).to eq('oink')
+        expect(pig.speak).to eq('oink')
     end
 end
 
@@ -111,44 +99,38 @@ end
 # a price.
 
 describe 'Farm' do
-    before :each do
-        @farm = Farm.new
-    end
+    let(:farm) { Farm.new }
 
     context 'buying cow' do
-        before :each do
-            @cow = Cow.new
-        end
+        let(:cow) { Cow.new }
 
         it 'charges money' do
-            expect { @farm.buy(@cow) }.to change { @farm.cash }.by(-@cow.price)
+            expect { farm.buy(cow) }.to change { farm.cash }.by(-cow.price)
         end
 
         it 'adds cow to items array' do
-            @farm.buy(@cow)
-            expect(@farm.items.last).to eq(@cow)
+            farm.buy(cow)
+            expect(farm.items.last).to eq(cow)
         end
 
         it 'returns true' do
-            expect(@farm.buy(@cow)).to eq(true)
+            expect(farm.buy(cow)).to eq(true)
         end
     end
 
     context 'buying rock' do
-        before :each do
-            @rock = Rock.new
-        end
+        let(:rock) { Rock.new }
 
         it 'does not charge any money' do
-            expect { @farm.buy(@cow) }.to change { @farm.cash }.by(0)
+            expect { farm.buy(rock) }.to change { farm.cash }.by(0)
         end
 
         it 'does not change items array' do
-            expect { @farm.buy(@cow) }.to change { @farm.items.count }.by(0)
+            expect { farm.buy(rock) }.to change { farm.items.count }.by(0)
         end
 
         it 'returns false' do
-            expect(@farm.buy(@rock)).to eq(false)
+            expect(farm.buy(rock)).to eq(false)
         end
     end
 end
@@ -164,25 +146,13 @@ describe 'Farm' do
 end
 
 # We want our farm to be able to sell animals.
-# Animals will have fixed values based on their type.
+# Animals have fixed prices based on their type.
 # The farm class will have a method #sell_item(i), which will sell the i-th
 # item in the items array
 
-describe 'Cow' do
-    context 'value' do
-        it 'is worth 200'
-    end
-end
-
-describe 'Pig' do
-    context 'value' do
-        it 'is worth 100'
-    end
-end
-
 describe 'Farm' do
     context '#sell_item' do
-        it 'increases cash'
+        it 'increases cash by correct amount'
         it 'removes item'
     end
 end
@@ -195,10 +165,8 @@ end
 describe 'Farm' do
     describe '#buy' do
         context 'without enough cash' do
-            before :each do
-                @farm.cash = 0
-                @cow = Cow.new
-            end
+            let(:farm) { Farm.new }
+            let(:cow) { Cow.new }
 
             it 'does not charge any money'
             it 'does not change items array'
@@ -210,17 +178,16 @@ end
 # We want our farm to be able to sell all its items with one method, #sell_all
 describe 'Farm' do
     describe '#sell_all' do
+        let(:farm) { Farm.new }
+        let(:cow1) { Cow.new }
+        let(:cow2) { Cow.new }
+        let(:pig1) { Pig.new }
+
         before :each do
-            @cow1 = Cow.new
-            @cow2 = Cow.new
-            @pig1 = Pig.new
-            @farm = Farm.new
-            @farm.buy(@cow1)
-            @farm.buy(@cow2)
-            @farm.buy(@cow3)
+            farm.items = [cow1, cow2, pig1]
         end
 
         it 'empties items array'
-        it 'increases cash'
+        it 'increases cash by correct amount'
     end
 end
