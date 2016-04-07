@@ -11,8 +11,8 @@ class Farm
     attr_accessor :cash, :items
 
     def initialize
-        @cash = 1000
-        @items = []
+        self.cash = 1000
+        self.items = []
     end
 
     def buy(item)
@@ -38,12 +38,12 @@ class Animal
     attr_accessor :price
 
     def initialize(price, sound)
-        @price = price
+        self.price = price
         @sound = sound
     end
 
     def speak
-        return @sound
+        return "#{sound}!"
     end
 end
 

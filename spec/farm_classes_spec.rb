@@ -1,21 +1,34 @@
 require 'farm_classes'
 
+# We're building a simple representation of a farm. To start, let's make a farm
+# class with two instance variables. First, we'll need an instance variable
+# called cash to keep track of how much cash the farm has. Second, we'll need
+# an instance variable called items that will keep track of which items the farm
+# has purchased.
+
+# Read the tests below to figure out the default values of these instance
+# variables and create a Farm class in farm_classes.rb to make the tests pass.
+
 describe 'Farm' do
     let(:farm) { Farm.new }
 
-    it 'has $1000 to start' do
-        expect(farm.cash).to eq(1000)
+    context 'cash' do
+        it 'is 1000 to start' do
+            expect(farm.cash).to eq(1000)
+        end
     end
 
     context 'items' do
         it 'is array' do
             expect(farm.items).to be_a(Array)
         end
-        it 'empty to start' do
+        it 'is empty to start' do
             expect(farm.items.count).to eq(0)
         end
     end
 end
+
+# Now let's make a Rock class. A rock has a color, and that's about it.
 
 describe 'Rock' do
     context 'gray rock' do
@@ -43,6 +56,9 @@ describe 'Rock' do
     end
 end
 
+# Let's make a cow class. A cow has a price and a sound (moo). It also has
+# a method called speak, which returns the cow's sound and an exclamation point.
+
 describe 'Cow' do
     let(:cow) { Cow.new }
 
@@ -51,10 +67,11 @@ describe 'Cow' do
     end
 
     it 'says "moo"' do
-        expect(cow.speak).to eq('moo')
+        expect(cow.speak).to eq('moo!')
     end
 end
 
+# Pigs are similar to cows. They have a price, a sound, and a speak method.
 describe 'Pig' do
     let(:pig) { Pig.new }
 
@@ -63,7 +80,7 @@ describe 'Pig' do
     end
 
     it 'says "oink"' do
-        expect(pig.speak).to eq('oink')
+        expect(pig.speak).to eq('oink!')
     end
 end
 
@@ -73,8 +90,8 @@ end
 
 # Here's a hint. Your Cow class should look like this:
 # class Cow < Animal
-#    def initialize
-#        super(100, 'moo')
+#    def initialize(price=100, sound='moo')
+#        super(price, sound)
 #    end
 # end
 
