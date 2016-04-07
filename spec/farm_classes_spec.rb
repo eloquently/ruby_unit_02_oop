@@ -72,6 +72,7 @@ describe 'Cow' do
 end
 
 # Pigs are similar to cows. They have a price, a sound, and a speak method.
+
 describe 'Pig' do
     let(:pig) { Pig.new }
 
@@ -230,11 +231,12 @@ end
 # We want our farm to be able to sell all its items with one method, #sell_all
 describe 'Farm' do
     describe '#sell_all' do
-        let(:farm) { Farm.new }
+        let(:farm) { Farm.new(1000, [cow1, cow2, pig1]) }
         let(:cow1) { Cow.new }
         let(:cow2) { Cow.new }
         let(:pig1) { Pig.new }
 
+<<<<<<< HEAD
         before :each do
             farm.items = [cow1, cow2, pig1]
         end
@@ -248,5 +250,9 @@ describe 'Farm' do
             amt = cow1.price + cow2.price + pig1.price
             expect { farm.sell_all }.to change { farm.cash }.by(amt)
         end
+=======
+        it 'empties items array'
+        it 'increases cash by correct amount'
+>>>>>>> master
     end
 end
