@@ -115,6 +115,10 @@ end
 # if the argument is an animal, however, all we really care about is if it has
 # a price.
 
+# To see if an object has a certain method, use the respond_to? method with
+# the name of the method you are interested in as a symbol.
+# For example: [0, 1, 2].respond_to?(:count) => true
+
 describe 'Farm' do
     let(:farm) { Farm.new }
 
@@ -155,22 +159,45 @@ end
 # Now it's time to write some tests on your own
 
 describe 'Farm' do
+    let(:farm) { Farm.new }
+
     context 'buying pig' do
-        it 'charges money'
-        it 'adds pig to items array'
-        it 'returns true'
+        let(:pig) { Pig.new }
+
+        it 'charges money' do
+            expect { farm.buy(pig) }.to change { farm.cash }.by(-pig.price)
+        end
+
+        it 'adds pig to items array' do
+            farm.buy(pig)
+            expect(farm.items.last).to eq(pig)
+        end
+
+        it 'returns true' do
+            expect(farm.buy(pig)).to eq(true)
+        end
     end
 end
 
 # We want our farm to be able to sell animals.
 # Animals have fixed prices based on their type.
 # The farm class will have a method #sell_item(i), which will sell the i-th
-# item in the items array
+# item in the items array. Hint: Use the built in delete_at method of the
+# Array class (http://ruby-doc.org/core-2.2.0/Array.html#method-i-delete_at)
 
 describe 'Farm' do
+    let(:pig) { Pig.new }
+    let(:farm) { Farm.new(1000, [pig]) }
+
     context '#sell_item' do
-        it 'increases cash by correct amount'
-        it 'removes item'
+        it 'increases cash by correct amount' do
+            expect { farm.sell_item(0) }.to change { farm.cash }.by(pig.price)
+        end
+
+        it 'removes item' do
+            farm.sell_item(0)
+            expect(farm.items.count).to eq(0)
+        end
     end
 end
 
@@ -182,12 +209,20 @@ end
 describe 'Farm' do
     describe '#buy' do
         context 'without enough cash' do
-            let(:farm) { Farm.new }
+            let(:farm) { Farm.new(0) }
             let(:cow) { Cow.new }
 
-            it 'does not charge any money'
-            it 'does not change items array'
-            it 'returns false'
+            it 'does not charge any money' do
+                expect{ farm.buy(cow) }.to change { farm.cash }.by(0)
+            end
+
+            it 'does not change items array' do
+                expect{ farm.buy(cow) }.to change { farm.items.count }.by(0)
+            end
+
+            it 'returns false' do
+                expect(farm.buy(cow)).to eq(false)
+            end
         end
     end
 end
@@ -204,7 +239,14 @@ describe 'Farm' do
             farm.items = [cow1, cow2, pig1]
         end
 
-        it 'empties items array'
-        it 'increases cash by correct amount'
+        it 'empties items array' do
+            farm.sell_all
+            expect(farm.items.count).to eq(0)
+        end
+
+        it 'increases cash by correct amount' do
+            amt = cow1.price + cow2.price + pig1.price
+            expect { farm.sell_all }.to change { farm.cash }.by(amt)
+        end
     end
 end
