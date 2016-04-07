@@ -43,7 +43,7 @@ class Animal
     end
 
     def speak
-        return "#{sound}!"
+        return "#{@sound}!"
     end
 end
 
