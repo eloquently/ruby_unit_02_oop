@@ -236,11 +236,6 @@ describe 'Farm' do
         let(:cow2) { Cow.new }
         let(:pig1) { Pig.new }
 
-<<<<<<< HEAD
-        before :each do
-            farm.items = [cow1, cow2, pig1]
-        end
-
         it 'empties items array' do
             farm.sell_all
             expect(farm.items.count).to eq(0)
@@ -250,9 +245,5 @@ describe 'Farm' do
             amt = cow1.price + cow2.price + pig1.price
             expect { farm.sell_all }.to change { farm.cash }.by(amt)
         end
-=======
-        it 'empties items array'
-        it 'increases cash by correct amount'
->>>>>>> master
     end
 end
