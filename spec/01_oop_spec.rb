@@ -1,4 +1,4 @@
-require '01_basics'
+require '01_oop'
 
 describe 'Farm' do
     let(:farm) { Farm.new }

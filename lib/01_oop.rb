@@ -41,17 +41,6 @@ class Farm
             return false
         end
     end
-
-    def sell_item(i)
-        self.cash += items[i].price
-        self.items.delete_at(0)
-    end
-
-    def sell_all
-        self.items.count.times do
-            sell_item(0)
-        end
-    end
 end
 
 class Rock
