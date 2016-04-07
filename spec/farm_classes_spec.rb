@@ -72,6 +72,7 @@ describe 'Cow' do
 end
 
 # Pigs are similar to cows. They have a price, a sound, and a speak method.
+
 describe 'Pig' do
     let(:pig) { Pig.new }
 
@@ -114,6 +115,10 @@ end
 # take one argument: the animal the farm is buying. Instead of checking to see
 # if the argument is an animal, however, all we really care about is if it has
 # a price.
+
+# To see if an object has a certain method, use the respond_to? method with
+# the name of the method you are interested in as a symbol.
+# For example: [0, 1, 2].respond_to?(:count) => true
 
 describe 'Farm' do
     let(:farm) { Farm.new }
@@ -165,7 +170,8 @@ end
 # We want our farm to be able to sell animals.
 # Animals have fixed prices based on their type.
 # The farm class will have a method #sell_item(i), which will sell the i-th
-# item in the items array
+# item in the items array. Hint: Use the built in delete_at method of the
+# Array class (http://ruby-doc.org/core-2.2.0/Array.html#method-i-delete_at)
 
 describe 'Farm' do
     context '#sell_item' do
@@ -195,14 +201,10 @@ end
 # We want our farm to be able to sell all its items with one method, #sell_all
 describe 'Farm' do
     describe '#sell_all' do
-        let(:farm) { Farm.new }
+        let(:farm) { Farm.new(1000, [cow1, cow2, pig1]) }
         let(:cow1) { Cow.new }
         let(:cow2) { Cow.new }
         let(:pig1) { Pig.new }
-
-        before :each do
-            farm.items = [cow1, cow2, pig1]
-        end
 
         it 'empties items array'
         it 'increases cash by correct amount'
